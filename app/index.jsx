@@ -1,0 +1,61 @@
+import { StyleSheet} from "react-native";
+import { Link } from "expo-router";
+import ThemedView from "../components/ThemedView";
+import ThemedLogo from "../components/ThemedLogo";
+import Spacer from "../components/Spacer";
+import ThemedText from "../components/ThemedText";
+
+const Home = () => {
+  return (
+    <ThemedView style={styles.container}>
+      <ThemedLogo />
+      <Spacer height={20} />
+      <ThemedText style={styles.title} title={true}>
+        The Number 1
+      </ThemedText>
+      <Spacer height={10} />
+      <ThemedText>Reading List App</ThemedText>
+      <Spacer />
+      <Link href="/register" style={styles.link}>
+        <ThemedText>Register Page</ThemedText>
+      </Link>
+      <Spacer height={10} />
+      <Link href="/login" style={styles.link}>
+        <ThemedText>Login Page</ThemedText>
+      </Link>
+      <Spacer height={10} />
+      <Link href="/profile" style={styles.link}>
+        <ThemedText>Profile Page</ThemedText>
+      </Link>
+    </ThemedView>
+  );
+};
+
+export default Home;
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    alignItems: "center",
+    justifyContent: "center",
+    backgroundColor: "#fff",
+  },
+  img: {
+    width: 150,
+    height: 150,
+    marginVertical: 20,
+  },
+  title: {
+    fontWeight: "bold",
+    fontSize: 20,
+  },
+  subtitle: {
+    marginTop: 10,
+    marginBottom: 30,
+    fontSize: 16,
+  },
+  link: {
+    borderBottomWidth: 1,
+    borderBottomColor: "black",
+  },
+});
