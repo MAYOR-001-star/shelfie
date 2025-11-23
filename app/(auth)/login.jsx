@@ -4,10 +4,22 @@ import ThemedText from "../../components/ThemedText";
 import ThemedView from "../../components/ThemedView";
 import Spacer from "../../components/Spacer";
 import ThemedButton from "../../components/ThemedButton";
+import ThemedTextInput from "../../components/ThemedTextInput";
+import { useState } from "react";
+import { useUser } from "../hooks/useUser";
 
 const Login = () => {
-  const handleSubmit = () => {
-    console.log("register submited");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  const { login } = useUser;
+
+  const handleSubmit = async () => {
+    try {
+      await login(email, register);
+    } catch (err) {
+      console.log(err.message);
+    }
   };
   return (
     <ThemedView style={styles.container}>
@@ -23,9 +35,27 @@ const Login = () => {
         Enter your credentials to continue
       </ThemedText>
       <Spacer />
+
+      <ThemedTextInput
+        style={{ width: "80%", marginBottom: 20 }}
+        placeholder="email"
+        keyboardType="email-address"
+        onChangeText={setEmail}
+        value={email}
+      />
+
+      <ThemedTextInput
+        style={{ width: "80%", marginBottom: 20 }}
+        placeholder="password"
+        onChangeText={setPassword}
+        value={password}
+        secureTextEntry
+      />
+
+      <Spacer />
       <ThemedButton onPress={handleSubmit}>
         <Text style={{ color: "#f2f2f2", textAlign: "center" }}>Login</Text>
-        </ThemedButton>
+      </ThemedButton>
       <Spacer height={80} />
 
       <Link href="/register">
