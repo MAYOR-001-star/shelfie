@@ -24,17 +24,19 @@
       "edgeToEdgeEnabled": true
     },
     "web": {
-      "favicon": "./assets/favicon.png"
+      "favicon": "./assets/favicon.png",
+      "jsEngine": "jsc"
     },
-    "plugins": [
-      "expo-router"
-    ],
+    "plugins": ["expo-router"],
     "updates": {
       "enabled": false,
       "fallbackToCacheTimeout": 0,
       "url": "https://u.expo.dev/c8d60da7-279e-4664-b8c6-421f26a8c41e"
     },
     "extra": {
+      "APPWRITE_PROJECT_ID": "69164fd30032dfb2e6a7",
+      "APPWRITE_PROJECT_NAME": "Shelfie",
+      "APPWRITE_PUBLIC_ENDPOINT": "https://nyc.cloud.appwrite.io/v1",
       "router": {},
       "eas": {
         "projectId": "c8d60da7-279e-4664-b8c6-421f26a8c41e"

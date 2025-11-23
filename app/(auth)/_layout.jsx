@@ -1,13 +1,10 @@
-import {
-  StatusBar,
-  StyleSheet,
-} from "react-native";
+import { StatusBar, StyleSheet } from "react-native";
 import { Stack } from "expo-router";
-import { useUser } from "../hooks/useUser";
+import useUser from "../../hooks/useUser";
 
 const RootLayout = () => {
-  const {user} = useUser()
-  console.log(user)
+  const { user } = useUser();
+  console.log(user);
   return (
     <>
       <StatusBar value="auto" />
