@@ -1,11 +1,12 @@
 import { ID } from "appwrite";
 import { account } from "../lib/appwrite";
-import { createContext, useState } from "react";
+import { createContext, useState, useEffect } from "react";
 
 export const UserContext = createContext();
 
 export const UserProvider = ({ children }) => {
   const [user, setUser] = useState(null);
+  const [authChecked, setAuthChecked] = useState(false);
 
   const login = async (email, password) => {
     try {
@@ -13,7 +14,7 @@ export const UserProvider = ({ children }) => {
       const response = await account.get();
       setUser(response);
     } catch (error) {
-      console.log(error.message);
+      throw Error(error.message);
     }
   };
   const register = async (email, password) => {
@@ -21,13 +22,31 @@ export const UserProvider = ({ children }) => {
       await account.create(ID.unique(), email, password);
       await login(email, password);
     } catch (error) {
-      console.log(error.message);
+      throw Error(error.message);
     }
   };
-  const logout = async () => {};
+  const logout = async () => {
+    account.deleteSession("current");
+    setUser(null);
+  };
+
+  const getInitialUserValue = async () => {
+    try {
+      const response = await account.get();
+      setUser(response);
+    } catch (err) {
+      setUser(null);
+    } finally {
+      setAuthChecked(true);
+    }
+  };
+
+  useEffect(() => {
+    getInitialUserValue();
+  }, []);
 
   return (
-    <UserContext.Provider value={{ user, login, register, logout }}>
+    <UserContext.Provider value={{ user, login, register, logout, authChecked }}>
       {children}
     </UserContext.Provider>
   );

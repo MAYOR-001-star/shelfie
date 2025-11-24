@@ -1,5 +1,5 @@
 import { StyleSheet, Text } from "react-native";
-import { Link } from "expo-router";
+import { Link, useRouter } from "expo-router";
 import ThemedText from "../../components/ThemedText";
 import ThemedView from "../../components/ThemedView";
 import Spacer from "../../components/Spacer";
@@ -7,18 +7,23 @@ import ThemedButton from "../../components/ThemedButton";
 import ThemedTextInput from "../../components/ThemedTextInput";
 import { useState } from "react";
 import useUser from "../../hooks/useUser";
+import { Colors } from "../../constants/Colors";
 
 const Login = () => {
+  const router = useRouter();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
 
   const { login } = useUser();
 
   const handleSubmit = async () => {
+    setError(null);
     try {
       await login(email, password);
+      router.replace("/profile");
     } catch (err) {
-      console.log(err.message);
+      setError(err.message);
     }
   };
   return (
@@ -37,7 +42,7 @@ const Login = () => {
       <Spacer />
 
       <ThemedTextInput
-        style={{ width: "80%", marginBottom: 20 }}
+        style={{ width: "100%", marginBottom: 20 }}
         placeholder="email"
         keyboardType="email-address"
         onChangeText={setEmail}
@@ -45,7 +50,7 @@ const Login = () => {
       />
 
       <ThemedTextInput
-        style={{ width: "80%", marginBottom: 20 }}
+        style={{ width: "100%", marginBottom: 20 }}
         placeholder="password"
         onChangeText={setPassword}
         value={password}
@@ -56,7 +61,10 @@ const Login = () => {
       <ThemedButton onPress={handleSubmit}>
         <Text style={{ color: "#f2f2f2", textAlign: "center" }}>Login</Text>
       </ThemedButton>
-      <Spacer height={80} />
+
+      <Spacer height={30} />
+      {error ? <ThemedText style={styles.error}>{error}</ThemedText> : null}
+      <Spacer height={30} />
 
       <Link href="/register">
         <ThemedText style={styles.linkText}>
@@ -93,5 +101,14 @@ const styles = StyleSheet.create({
     fontSize: 16,
     color: "#3b82f6",
     fontWeight: "500",
+  },
+  error: {
+    color: Colors.warning,
+    padding: 10,
+    backgroundColor: "#f5c1c8",
+    borderColor: Colors.warning,
+    borderWidth: 1,
+    borderRadius: 6,
+    marginHorizontal: 10,
   },
 });
